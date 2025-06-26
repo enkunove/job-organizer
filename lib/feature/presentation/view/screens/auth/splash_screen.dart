@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
       builder: (context, appState, _) {
         if (appState.isInitialized) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            final nextRoute = appState.isLoggedIn ? '/home' : '/login';
+            final nextRoute = appState.isLoggedIn ? '/home' : '/register';
             context.router.replacePath(nextRoute);
           });
         }

@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
       child: Consumer<LoginScreenViewmodel>(
         builder: (context, viewModel, _) {
           return Scaffold(
-            backgroundColor: theme.colorScheme.background,
+            backgroundColor: theme.colorScheme.surface,
             body: Center(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 48,
                       child: FilledButton(
-                        onPressed: viewModel.isLoading ? null : viewModel.login,
+                        onPressed: viewModel.isLoading ? null : () => viewModel.login(context),
                         child: viewModel.isLoading
                             ? const CircularProgressIndicator(strokeWidth: 2, color: Colors.white)
                             : const Text('Войти'),
@@ -71,8 +71,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () {}, // заглушка
-                      child: const Text('Забыли пароль?'),
+                      onPressed: () => context.router.replacePath('/register'),
+                      child: const Text('Нет аккаунта?'),
                     ),
                   ],
                 ),

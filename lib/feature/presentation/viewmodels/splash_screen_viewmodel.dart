@@ -11,9 +11,6 @@ class AppState extends ChangeNotifier {
   bool get isLoggedIn => _isLoggedIn;
 
   Future<void> initializeApp() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
     await Future.delayed(const Duration(seconds: 2));
     _isLoggedIn = false;
     _isInitialized = true;
