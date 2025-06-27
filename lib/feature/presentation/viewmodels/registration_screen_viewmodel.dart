@@ -53,7 +53,7 @@ class RegistrationScreenViewmodel extends ChangeNotifier {
     if (success) {
       context.router.pushPath('/boards');
     } else {
-      emailError = 'Ошибка регистрации';
+      emailError = 'Ошибка';
     }
     isLoading = false;
     notifyListeners();

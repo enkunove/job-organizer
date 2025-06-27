@@ -10,6 +10,12 @@ class TasksUsecases {
   Future<List<Task>> getTasksForBoardByBoardId(String boardId) async {
     return await repository.getTasksForBoardByBoardId(boardId);
   }
+  Future<void> deleteTask(String id){
+    return Future.value();
+  }
+  Future<void> updateTask(Task task){
+    return Future.value();
+  }
 
   Future<void> createTask({
     required String boardId,

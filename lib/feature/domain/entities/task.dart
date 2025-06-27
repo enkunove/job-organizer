@@ -20,4 +20,27 @@ class Task {
     this.status = TaskStatus.pending,
     this.priority = TaskPriority.none,
   });
+
+  Task copyWith({
+    String? id,
+    String? title,
+    String? comment,
+    DateTime? changed,
+    DateTime? toDo,
+    TaskStatus? status,
+    TaskPriority? priority,
+    String? boardId,
+  }) {
+    return Task(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      comment: comment ?? this.comment,
+      changed: changed ?? this.changed,
+      toDo: toDo ?? this.toDo,
+      status: status ?? this.status,
+      priority: priority ?? this.priority,
+      boardId: boardId ?? this.boardId,
+    );
+  }
+
 }

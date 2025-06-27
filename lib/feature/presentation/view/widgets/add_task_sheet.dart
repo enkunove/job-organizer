@@ -19,7 +19,7 @@ void showAddTaskSheet(BuildContext context, TasksScreenViewmodel vm) {
     ),
     builder: (context) => Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 30,
         left: 16,
         right: 16,
         top: 24,
