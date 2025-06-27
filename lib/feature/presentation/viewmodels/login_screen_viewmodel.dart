@@ -56,7 +56,7 @@ class LoginScreenViewmodel extends ChangeNotifier {
       _emailError = 'Ошибка регистрации';
     }
     else {
-      context.router.replacePath("/boards");
+      context.router.pushPath("/boards");
     }
     _isLoading = false;
     notifyListeners();

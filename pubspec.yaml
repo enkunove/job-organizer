@@ -20,6 +20,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_auth: ^5.6.0
   get_it:
+  intl:
+  reorderables:
+  flutter_colorpicker:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

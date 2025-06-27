@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () => context.router.replacePath('/register'),
+                      onPressed: () => context.router.pushPath('/register'),
                       child: const Text('Нет аккаунта?'),
                     ),
                   ],

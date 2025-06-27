@@ -14,6 +14,8 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: TasksRoute.page, path: '/tasks',),
     AutoRoute(page: LoginRoute.page, path: '/login',),
     AutoRoute(page: RegistrationRoute.page, path: '/register',),
+    AutoRoute(page: BoardDetailRoute.page, path: '/boards/:boardId'),
+    AutoRoute(page: BoardCreateRoute.page, path: "/boards/create"),
 
   ];
 

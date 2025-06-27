@@ -71,7 +71,7 @@ class RegistrationScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () => context.router.replacePath("/login"),
+                      onPressed: () => context.router.pushPath("/login"),
                       child: const Text('Уже есть аккаунт? Войти'),
                     ),
                   ],

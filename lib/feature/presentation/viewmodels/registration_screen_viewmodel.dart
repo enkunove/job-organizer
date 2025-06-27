@@ -45,7 +45,7 @@ class RegistrationScreenViewmodel extends ChangeNotifier {
     notifyListeners();
     final success = await usecases.register(_email, _password);
     if (success) {
-      context.router.replacePath('/boards');
+      context.router.pushPath('/boards');
     } else {
       emailError = 'Ошибка регистрации';
     }
