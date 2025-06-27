@@ -6,8 +6,15 @@ enum TaskStatus {
 }
 
 enum TaskPriority{
-  high,
-  medium,
+  none,
   low,
-  none
+  medium,
+  high,
+
+}
+
+enum TaskSortOption {
+  updatedDate,
+  priority,
+  deadline,
 }

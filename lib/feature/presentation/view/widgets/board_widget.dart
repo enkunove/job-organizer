@@ -104,7 +104,7 @@ class _BoardWidgetState extends State<BoardWidget> {
                   ],
                   const SizedBox(height: 12),
                   Text(
-                    'Создано: ${DateFormat.yMMMd().format(board.createdAt)}',
+                    'Последнее обновление: ${DateFormat.yMMMd().format(board.lastUpdate)}',
                     style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor),
                   ),
                 ],

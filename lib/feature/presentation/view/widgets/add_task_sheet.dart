@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:test_task/core/utils/priority_embedders.dart';
+import 'package:test_task/core/utils/status_embedders.dart';
 
 import '../../../domain/entities/task_enums.dart';
 import '../../viewmodels/tasks_screen_viewmodel.dart';
@@ -49,7 +52,7 @@ void showAddTaskSheet(BuildContext context, TasksScreenViewmodel vm) {
                     items: TaskPriority.values
                         .map((p) => DropdownMenuItem(
                       value: p,
-                      child: Text(p.name),
+                      child: Text(priorityLabel(p)),
                     ))
                         .toList(),
                     onChanged: (value) {
@@ -65,9 +68,10 @@ void showAddTaskSheet(BuildContext context, TasksScreenViewmodel vm) {
                     decoration: const InputDecoration(labelText: 'Статус'),
                     value: selectedStatus,
                     items: TaskStatus.values
+                        .where((s) => s != TaskStatus.canceled)
                         .map((s) => DropdownMenuItem(
                       value: s,
-                      child: Text(s.name),
+                      child: Text(statusLabel(s)),
                     ))
                         .toList(),
                     onChanged: (value) {
@@ -127,7 +131,8 @@ void showAddTaskSheet(BuildContext context, TasksScreenViewmodel vm) {
                       toDo: selectedDueDate,
                     );
 
-                    Navigator.pop(context);
+                    context.router.pushPath("/boards/${vm.boardId}");
+
                   },
                   icon: const Icon(Icons.check),
                   label: const Text('Создать'),

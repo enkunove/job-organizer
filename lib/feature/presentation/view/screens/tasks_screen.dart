@@ -1,76 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_task/core/utils/priority_embedders.dart';
+import 'package:test_task/core/utils/status_embedders.dart';
+import 'package:test_task/feature/presentation/view/widgets/board_header_widget.dart';
+import 'package:test_task/feature/presentation/view/widgets/task_filters.dart';
 import 'package:test_task/feature/presentation/viewmodels/tasks_screen_viewmodel.dart';
 import '../../../../core/service_locator.dart';
+import '../../../domain/entities/board.dart';
 import '../../../domain/entities/task.dart';
 import '../../../domain/entities/task_enums.dart';
 import '../widgets/add_task_sheet.dart';
 import '../widgets/task_widget.dart';
 
 @RoutePage()
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   final String boardId;
 
   const TasksScreen({super.key, @PathParam('boardId') required this.boardId});
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-
-  Widget _buildFilters(TasksScreenViewmodel vm) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          Expanded(
-            child: DropdownButton<TaskPriority?>(
-              isExpanded: true,
-              value: vm.selectedPriority,
-              hint: const Text('Приоритет'),
-              items: [
-                const DropdownMenuItem(
-                  value: null,
-                  child: Text('Все приоритеты'),
-                ),
-                ...TaskPriority.values.map(
-                      (priority) => DropdownMenuItem(
-                    value: priority,
-                    child: Text(priority.name),
-                  ),
-                ),
-              ],
-              onChanged: vm.setPriority,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: DropdownButton<TaskStatus?>(
-              isExpanded: true,
-              value: vm.selectedStatus,
-              hint: const Text('Статус'),
-              items: [
-                const DropdownMenuItem(
-                  value: null,
-                  child: Text('Все статусы'),
-                ),
-                ...TaskStatus.values.map(
-                      (status) => DropdownMenuItem(
-                    value: status,
-                    child: Text(status.name),
-                  ),
-                ),
-              ],
-              onChanged: vm.setStatus,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +26,7 @@ class _TasksScreenState extends State<TasksScreen> {
     return ChangeNotifierProvider(
       create: (_) {
         final vm = InjectionContainer.sl<TasksScreenViewmodel>();
-        vm.init(widget.boardId);
+        vm.init(boardId);
         return vm;
       },
       child: Consumer<TasksScreenViewmodel>(
@@ -91,19 +38,39 @@ class _TasksScreenState extends State<TasksScreen> {
                 IconButton(
                   icon: const Icon(Icons.refresh),
                   onPressed: vm.refresh,
-                  tooltip: 'Обновить',
                 ),
                 IconButton(
-                  icon: const Icon(Icons.add_task),
-                  onPressed: () => showAddTaskSheet(context, vm),
-                  tooltip: 'Добавить задачу',
+                  icon: const Icon(Icons.archive),
+                  onPressed: () => context.router.pushPath("/archive"),
                 ),
               ],
             ),
             body: Column(
               children: [
+                FutureBuilder<Board>(
+                  future: vm.board,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: LinearProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError || !snapshot.hasData) {
+                      return const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Text('Не удалось загрузить доску'),
+                      );
+                    }
+                    final board = snapshot.data!;
+                    return IntrinsicHeight(
+                      child: BoardHeaderWidget(board: board),
+                    );
+
+                  },
+                ),
                 const SizedBox(height: 12),
-                _buildFilters(vm),
+                TaskFilters(vm: vm),
                 const SizedBox(height: 12),
                 Expanded(
                   child: FutureBuilder<List<Task>>(
@@ -112,13 +79,10 @@ class _TasksScreenState extends State<TasksScreen> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       }
-
                       if (snapshot.hasError) {
                         return Center(child: Text('Ошибка: ${snapshot.error}'));
                       }
-
                       final tasks = snapshot.data ?? [];
-
                       if (tasks.isEmpty) {
                         return Center(
                           child: Text(

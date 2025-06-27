@@ -40,7 +40,7 @@ class InjectionContainer {
     sl.registerFactory<LoginScreenViewmodel>(() => LoginScreenViewmodel(usecases: sl()));
     sl.registerFactory<RegistrationScreenViewmodel>(() => RegistrationScreenViewmodel(usecases: sl()));
     sl.registerFactory<BoardCreateViewModel>(() => BoardCreateViewModel(usecases: sl()));
-    sl.registerFactory<TasksScreenViewmodel>(() => TasksScreenViewmodel(usecases: sl()));
+    sl.registerFactory<TasksScreenViewmodel>(() => TasksScreenViewmodel(boardsUsecases: sl(), tasksUsecases: sl()));
 
     sl.registerSingleton<AppState>(AppState(usecases: sl()));
 

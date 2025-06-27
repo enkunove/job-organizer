@@ -21,7 +21,7 @@ class RegistrationScreen extends StatelessWidget {
             body: Center(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 4,
+                  horizontal: MediaQuery.of(context).size.width < 500? MediaQuery.of(context).size.width / 7 : MediaQuery.of(context).size.width / 4,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

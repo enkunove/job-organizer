@@ -8,7 +8,6 @@ import 'package:test_task/feature/domain/usecases/boards_usecases.dart';
 import '../../../../core/routing/app_routing.gr.dart';
 import '../../../domain/entities/board.dart';
 import '../widgets/board_widget.dart';
-import '../widgets/theme_toggle_widget.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -29,7 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Мои доски задач'),
-        actions: const [ThemeToggleWidget()],
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.router.pushPath("/settings");
+            },
+            icon: Icon(Icons.settings),
+          ),
+        ],
+        automaticallyImplyLeading: false,
       ),
       body: FutureBuilder<List<Board>>(
         future: usecases.getBoards(),
@@ -59,7 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: (_boards.length / (isSmall ? 1 : 2)).ceil(),
               itemBuilder: (context, rowIndex) {
                 final startIndex = rowIndex * (isSmall ? 1 : 2);
-                final endIndex = (startIndex + (isSmall ? 1 : 2)).clamp(0, _boards.length);
+                final endIndex = (startIndex + (isSmall ? 1 : 2)).clamp(
+                  0,
+                  _boards.length,
+                );
 
                 final rowItems = _boards.sublist(startIndex, endIndex);
                 return Padding(
@@ -69,7 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       final board = rowItems[i];
                       return Expanded(
                         child: Padding(
-                          padding: EdgeInsets.only(right: i == rowItems.length - 1 ? 0 : spacing),
+                          padding: EdgeInsets.only(
+                            right: i == rowItems.length - 1 ? 0 : spacing,
+                          ),
                           child: BoardWidget(board: board),
                         ),
                       );
@@ -79,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           );
-
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -89,4 +100,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

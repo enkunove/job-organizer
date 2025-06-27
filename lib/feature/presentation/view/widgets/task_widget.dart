@@ -2,47 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:test_task/feature/domain/entities/task_enums.dart';
 
+import '../../../../core/utils/priority_embedders.dart';
+import '../../../../core/utils/status_embedders.dart';
 import '../../../domain/entities/task.dart';
-import 'task_edit_dialog.dart'; // Импортируй свой диалог редактирования
+import 'task_edit_dialog.dart';
 
 class TaskWidget extends StatelessWidget {
   final Task task;
 
   const TaskWidget({super.key, required this.task});
 
-  Color _getStatusColor(BuildContext context) {
-    final theme = Theme.of(context);
-    switch (task.status) {
-      case TaskStatus.pending:
-        return Colors.red;
-      case TaskStatus.inProgress:
-        return Colors.yellow;
-      case TaskStatus.completed:
-        return Colors.green;
-      case TaskStatus.canceled:
-        return theme.colorScheme.error;
-    }
-  }
-
-  Color _getPriorityColor(BuildContext context) {
-    final theme = Theme.of(context);
-    switch (task.priority) {
-      case TaskPriority.high:
-        return Colors.redAccent;
-      case TaskPriority.medium:
-        return Colors.amber;
-      case TaskPriority.low:
-        return Colors.green;
-      case TaskPriority.none:
-        return theme.disabledColor;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final statusColor = _getStatusColor(context);
-    final priorityColor = _getPriorityColor(context);
+    final statusColor = getStatusColor(task);
+    final priorityColor = getPriorityColor(task);
 
     return GestureDetector(
       onTap: () async {
@@ -78,7 +52,7 @@ class TaskWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Приоритет: ${task.priority.name}",
+                    "Приоритет: ${priorityLabel(task.priority)}",
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: priorityColor,
                       fontSize: 12,
@@ -105,15 +79,6 @@ class TaskWidget extends StatelessWidget {
                     'Создано: ${DateFormat.yMMMd().format(task.changed)}',
                     style: theme.textTheme.labelSmall,
                   ),
-                  if (task.toDo != null) ...[
-                    const SizedBox(width: 16),
-                    Icon(Icons.schedule, size: 16, color: theme.disabledColor),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Сделать до: ${DateFormat.yMMMd().format(task.toDo!)}',
-                      style: theme.textTheme.labelSmall,
-                    ),
-                  ],
                   const Spacer(),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -129,6 +94,18 @@ class TaskWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                ],
+              ),
+              Row(
+                children: [
+                  if (task.toDo != null) ...[
+                    Icon(Icons.schedule, size: 16, color: theme.disabledColor),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Сделать до: ${DateFormat.yMMMd().format(task.toDo!)}',
+                      style: theme.textTheme.labelSmall,
+                    ),
+                  ],
                 ],
               )
             ],

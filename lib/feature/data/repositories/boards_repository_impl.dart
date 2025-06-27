@@ -31,6 +31,11 @@ class BoardsRepositoryImpl implements BoardsRepository{
 
     return boardsMaps.map((map) => BoardModel.fromMap(map)).toList();
   }
+  @override
+  Future<BoardModel> getBoardById(String boardId) async{
+    final map = await datasource.getBoardById(boardId);
+    return BoardModel.fromMap(map);
+  }
 
 
 }

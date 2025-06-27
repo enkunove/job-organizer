@@ -39,4 +39,8 @@ class BoardsUsecases {
     return await repository.getBoardsByOwner(uid);
   }
 
+  Future<Board> getBoardById(String boardId) async {
+    return await repository.getBoardById(boardId);
+  }
+
 }

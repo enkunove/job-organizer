@@ -37,4 +37,24 @@ class BoardsDatasource {
             return [];
         }
     }
+
+    Future<Map<String, dynamic>> getBoardById(String boardId) async {
+        try {
+            final docSnapshot = await _firestore.collection('boards').doc(boardId).get();
+
+            if (docSnapshot.exists) {
+                final data = docSnapshot.data()!;
+                data['id'] = docSnapshot.id;
+                print(data);
+                return data;
+            } else {
+                print('нет д');
+                return {};
+            }
+        } on FirebaseException catch (e) {
+            print(e.message);
+            return {};
+        }
+    }
+
 }
