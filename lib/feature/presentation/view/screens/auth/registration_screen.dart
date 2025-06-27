@@ -58,6 +58,14 @@ class RegistrationScreen extends StatelessWidget {
                         errorText: viewModel.passwordError,
                       ),
                     ),
+                    const SizedBox(height: 16),
+                    CheckboxListTile(
+                      value: viewModel.rememberMe,
+                      onChanged: viewModel.setRememberMe,
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text('Запомнить меня'),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
                     const SizedBox(height: 24),
                     SizedBox(
                       width: double.infinity,

@@ -12,6 +12,12 @@ class RegistrationScreenViewmodel extends ChangeNotifier {
   String? emailError;
   String? passwordError;
   bool isLoading = false;
+  bool rememberMe = false;
+
+  void setRememberMe(bool? value) {
+    rememberMe = value ?? false;
+    notifyListeners();
+  }
 
   void onEmailChanged(String value) {
     _email = value.trim();
@@ -43,7 +49,7 @@ class RegistrationScreenViewmodel extends ChangeNotifier {
     }
     isLoading = true;
     notifyListeners();
-    final success = await usecases.register(_email, _password);
+    final success = await usecases.register(_email, _password, rememberMe);
     if (success) {
       context.router.pushPath('/boards');
     } else {

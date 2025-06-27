@@ -65,6 +65,7 @@ class _BoardWidgetState extends State<BoardWidget> {
                 ),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(

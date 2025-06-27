@@ -19,7 +19,7 @@ Future main() async{
   await InjectionContainer.init();
   runApp(
     ChangeNotifierProvider(
-      create: (_) => AppState()..initializeApp(),
+      create: (_) => InjectionContainer.sl<AppState>() ..initializeApp(),
       child: Application(),
     ),
   );

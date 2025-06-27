@@ -37,5 +37,4 @@ class BoardsDatasource {
             return [];
         }
     }
-
 }

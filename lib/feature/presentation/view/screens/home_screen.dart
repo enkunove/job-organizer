@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Мои доски'),
+        title: const Text('Мои доски задач'),
         actions: const [ThemeToggleWidget()],
       ),
       body: FutureBuilder<List<Board>>(
@@ -53,33 +53,33 @@ class _HomeScreenState extends State<HomeScreen> {
           final crossAxisCount = isSmall ? 1 : 2;
           final padding = 16.0;
           final spacing = 16.0;
-
           return Padding(
             padding: EdgeInsets.all(padding),
-            child: GridView.builder(
-              itemCount: _boards.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: spacing,
-                mainAxisSpacing: spacing,
-                childAspectRatio: isSmall
-                    ? (screenWidth - padding * 2) / 120
-                    : (screenWidth - padding * 2 - spacing) / 2 / 120,
-              ),
-              itemBuilder: (context, index) {
-                final board = _boards[index];
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  transitionBuilder: (child, anim) =>
-                      ScaleTransition(scale: anim, child: child),
-                  child: BoardWidget(
-                    key: ValueKey('${board.id}_${board.createdAt}'),
-                    board: board,
+            child: ListView.builder(
+              itemCount: (_boards.length / (isSmall ? 1 : 2)).ceil(),
+              itemBuilder: (context, rowIndex) {
+                final startIndex = rowIndex * (isSmall ? 1 : 2);
+                final endIndex = (startIndex + (isSmall ? 1 : 2)).clamp(0, _boards.length);
+
+                final rowItems = _boards.sublist(startIndex, endIndex);
+                return Padding(
+                  padding: EdgeInsets.only(bottom: spacing),
+                  child: Row(
+                    children: List.generate(rowItems.length, (i) {
+                      final board = rowItems[i];
+                      return Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(right: i == rowItems.length - 1 ? 0 : spacing),
+                          child: BoardWidget(board: board),
+                        ),
+                      );
+                    }),
                   ),
                 );
               },
             ),
           );
+
         },
       ),
       floatingActionButton: FloatingActionButton(

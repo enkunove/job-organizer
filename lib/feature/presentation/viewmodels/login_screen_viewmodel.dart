@@ -17,6 +17,13 @@ class LoginScreenViewmodel extends ChangeNotifier {
   String? get passwordError => _passwordError;
   bool get isLoading => _isLoading;
 
+  bool rememberMe = false;
+
+  void setRememberMe(bool? value) {
+    rememberMe = value ?? false;
+    notifyListeners();
+  }
+
   void onEmailChanged(String value) {
     _email = value.trim();
     _emailError = null;
@@ -51,7 +58,7 @@ class LoginScreenViewmodel extends ChangeNotifier {
     if (!_validate()) return;
     _isLoading = true;
     notifyListeners();
-    final success = await usecases.login(_email, _password);
+    final success = await usecases.login(_email, _password, rememberMe);
     if (!success) {
       _emailError = 'Ошибка регистрации';
     }

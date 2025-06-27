@@ -24,6 +24,7 @@ dependencies:
   reorderables:
   flutter_colorpicker:
   cloud_firestore:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

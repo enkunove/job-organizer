@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
 import 'package:test_task/feature/presentation/view/screens/auth/login_screen.dart'
     as _i4;
 import 'package:test_task/feature/presentation/view/screens/auth/registration_screen.dart'
@@ -123,16 +124,51 @@ class SplashRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.TasksScreen]
-class TasksRoute extends _i8.PageRouteInfo<void> {
-  const TasksRoute({List<_i8.PageRouteInfo>? children})
-    : super(TasksRoute.name, initialChildren: children);
+class TasksRoute extends _i8.PageRouteInfo<TasksRouteArgs> {
+  TasksRoute({
+    _i9.Key? key,
+    required String boardId,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
+         TasksRoute.name,
+         args: TasksRouteArgs(key: key, boardId: boardId),
+         rawPathParams: {'boardId': boardId},
+         initialChildren: children,
+       );
 
   static const String name = 'TasksRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i7.TasksScreen();
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<TasksRouteArgs>(
+        orElse: () => TasksRouteArgs(boardId: pathParams.getString('boardId')),
+      );
+      return _i7.TasksScreen(key: args.key, boardId: args.boardId);
     },
   );
+}
+
+class TasksRouteArgs {
+  const TasksRouteArgs({this.key, required this.boardId});
+
+  final _i9.Key? key;
+
+  final String boardId;
+
+  @override
+  String toString() {
+    return 'TasksRouteArgs{key: $key, boardId: $boardId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! TasksRouteArgs) return false;
+    return key == other.key && boardId == other.boardId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ boardId.hashCode;
 }
