@@ -25,8 +25,14 @@ dependencies:
   flutter_colorpicker:
   cloud_firestore:
   shared_preferences:
+  firebase_messaging:
+  flutter_local_notifications:
+  timezone:
+  mocktail:
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0

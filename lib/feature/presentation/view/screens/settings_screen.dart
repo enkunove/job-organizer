@@ -69,7 +69,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             leading: const Icon(Icons.logout),
             title: const Text('Выйти'),
             subtitle: Text(email),
-            onTap: () => context.router.replacePath('/login')
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              context.router.replacePath('/login');
+            }
           ),
         ],
       ),

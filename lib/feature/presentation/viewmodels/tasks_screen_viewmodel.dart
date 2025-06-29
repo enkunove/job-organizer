@@ -59,6 +59,7 @@ class TasksScreenViewmodel extends ChangeNotifier {
       return matchesPriority && matchesStatus;
     }).toList();
     if (_selectedSortOption == null) return filtered;
+
     filtered.sort((a, b) {
       switch (_selectedSortOption!) {
         case TaskSortOption.updatedDate:

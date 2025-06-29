@@ -13,6 +13,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: HomeRoute.page, path: '/boards'),
     AutoRoute(page: SettingsRoute.page, path: '/settings'),
     AutoRoute(page: ArchiveTasksRoute.page, path: '/archive/tasks'),
+    AutoRoute(page: ArchiveBoardsRoute.page, path: '/archive/boards'),
     AutoRoute(page: LoginRoute.page, path: '/login',),
     AutoRoute(page: RegistrationRoute.page, path: '/register',),
     AutoRoute(page: TasksRoute.page, path: '/boards/:boardId'),

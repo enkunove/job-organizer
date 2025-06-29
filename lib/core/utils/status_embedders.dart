@@ -7,7 +7,7 @@ Color getStatusColor(Task task) {
     case TaskStatus.pending:
       return Colors.red;
     case TaskStatus.inProgress:
-      return Colors.yellow;
+      return Colors.blue;
     case TaskStatus.completed:
       return Colors.green;
     case TaskStatus.canceled:

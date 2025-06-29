@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:test_task/feature/data/datasources/local/notifications_datasource.dart';
 import 'package:test_task/feature/data/datasources/local/settings_datasource.dart';
 import 'package:test_task/feature/data/datasources/remote/boards_datasource.dart';
 import 'package:test_task/feature/data/datasources/remote/tasks_datasource.dart';
 import 'package:test_task/feature/data/datasources/remote/user_datasource.dart';
+import 'package:test_task/feature/data/repositories/notification_repository_impl.dart';
 import 'package:test_task/feature/data/repositories/tasks_repository_impl.dart';
 import 'package:test_task/feature/data/repositories/user_repository_impl.dart';
 import 'package:test_task/feature/domain/repositories/boards_repository.dart';
+import 'package:test_task/feature/domain/repositories/notifications_repository.dart';
 import 'package:test_task/feature/domain/repositories/user_repository.dart';
 import 'package:test_task/feature/domain/usecases/auth_usecases.dart';
 import 'package:test_task/feature/domain/usecases/boards_usecases.dart';
@@ -27,22 +31,24 @@ class InjectionContainer {
     sl.registerLazySingleton<UserDatasource>(() => UserDatasource());
     sl.registerLazySingleton<BoardsDatasource>(() => BoardsDatasource());
     sl.registerLazySingleton<TasksDatasource>(() => TasksDatasource());
+    sl.registerLazySingleton<NotificationsDatasource>(()=>NotificationsDatasource());
     sl.registerLazySingleton<SettingsDatasource>(() => SettingsDatasource());
 
     sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(userDatasource: sl(), settingsDatasource: sl()));
     sl.registerLazySingleton<BoardsRepository>(() => BoardsRepositoryImpl(datasource: sl()));
     sl.registerLazySingleton<TasksRepository>(() => TasksRepositoryImpl(datasource: sl()));
+    sl.registerLazySingleton<NotificationsRepository>(() => NotificationsRepositoryImpl(notificationsDatasource: sl()));
 
     sl.registerLazySingleton<AuthUsecases>(() => AuthUsecases(repository: sl()));
     sl.registerLazySingleton<BoardsUsecases>(() => BoardsUsecases(repository: sl()));
-    sl.registerLazySingleton<TasksUsecases>(() => TasksUsecases(userRepository: sl(), tasksRepository: sl(), boardsRepository: sl()));
+    sl.registerLazySingleton<TasksUsecases>(() => TasksUsecases(userRepository: sl(), tasksRepository: sl(), boardsRepository: sl(), notificationsRepository: sl()));
 
     sl.registerFactory<LoginScreenViewmodel>(() => LoginScreenViewmodel(usecases: sl()));
     sl.registerFactory<RegistrationScreenViewmodel>(() => RegistrationScreenViewmodel(usecases: sl()));
     sl.registerFactory<BoardCreateViewModel>(() => BoardCreateViewModel(usecases: sl()));
     sl.registerFactory<TasksScreenViewmodel>(() => TasksScreenViewmodel(boardsUsecases: sl(), tasksUsecases: sl()));
 
-    sl.registerSingleton<AppState>(AppState(usecases: sl()));
+    sl.registerSingleton<AppState>(AppState(usecases: sl(), tasksUsecases: sl()));
 
   }
 }

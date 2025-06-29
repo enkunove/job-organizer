@@ -31,6 +31,10 @@ class BoardsUsecases {
     return repository.createBoard(board);
   }
 
+  Future<void>updateBoard(Board board) async{
+    return await repository.updateBoard(board.copyWith(lastUpdate: DateTime.now()));
+  }
+
   Future<List<Board>> getBoards() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null){

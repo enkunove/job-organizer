@@ -1,13 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:test_task/feature/domain/usecases/tasks_usecases.dart';
 
 import '../../../firebase_options.dart';
 import '../../domain/usecases/auth_usecases.dart';
 
 class AppState extends ChangeNotifier {
   final AuthUsecases usecases;
+  final TasksUsecases tasksUsecases;
 
-  AppState({required this.usecases});
+  AppState({required this.usecases, required this.tasksUsecases});
   bool _isInitialized = false;
   bool _isLoggedIn = false;
 
@@ -20,7 +22,7 @@ class AppState extends ChangeNotifier {
 
     final currentUser = await usecases.getCurrentUser();
     _isLoggedIn = rememberMe && currentUser != null;
-
+    await tasksUsecases.requestPermissions();
     _isInitialized = true;
     notifyListeners();
   }

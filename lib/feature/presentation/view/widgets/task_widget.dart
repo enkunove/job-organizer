@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:test_task/core/service_locator.dart';
 import 'package:test_task/feature/domain/entities/task_enums.dart';
+import 'package:test_task/feature/domain/usecases/tasks_usecases.dart';
 
 import '../../../../core/utils/priority_embedders.dart';
 import '../../../../core/utils/status_embedders.dart';
@@ -9,8 +12,9 @@ import 'task_edit_dialog.dart';
 
 class TaskWidget extends StatelessWidget {
   final Task task;
+  final TasksUsecases usecases = InjectionContainer.sl<TasksUsecases>();
 
-  const TaskWidget({super.key, required this.task});
+  TaskWidget({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +77,22 @@ class TaskWidget extends StatelessWidget {
               const SizedBox(height: 12),
               Row(
                 children: [
-                  Icon(Icons.calendar_today, size: 16, color: theme.disabledColor),
+                  Icon(
+                    Icons.calendar_today,
+                    size: 16,
+                    color: theme.disabledColor,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     'Создано: ${DateFormat.yMMMd().format(task.changed)}',
                     style: theme.textTheme.labelSmall,
                   ),
                   const Spacer(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  if (task.status != TaskStatus.canceled) Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: statusColor.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(12),
@@ -107,7 +118,23 @@ class TaskWidget extends StatelessWidget {
                     ),
                   ],
                 ],
-              )
+              ),
+              if (task.status == TaskStatus.canceled)
+                Row(
+                  children: [
+                    Icon(Icons.schedule, size: 16, color: theme.disabledColor),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Удалена: ${DateFormat.yMMMd().format(task.changed)}',
+                      style: theme.textTheme.labelSmall,
+                    ),
+                    Spacer(),
+                    IconButton(onPressed: ()async {
+                      await usecases.updateTask(task.copyWith(status: TaskStatus.pending));
+                      context.router.pushPath("/boards");
+                    }, icon: Icon(Icons.restore))
+                  ],
+                ),
             ],
           ),
         ),

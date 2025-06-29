@@ -1,10 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:test_task/core/service_locator.dart';
 import 'package:test_task/feature/domain/entities/board.dart';
+import 'package:test_task/feature/domain/usecases/boards_usecases.dart';
+import 'package:test_task/feature/presentation/view/widgets/board_edit_dialog.dart';
 
 class BoardHeaderWidget extends StatelessWidget {
   final Board board;
-  const BoardHeaderWidget({super.key, required this.board});
+  final BoardsUsecases usecases = InjectionContainer.sl<BoardsUsecases>();
+  BoardHeaderWidget({super.key, required this.board});
 
   Color _parseColor(String hex) {
     final normalized = hex.length == 6 ? 'FF$hex' : hex;
@@ -46,9 +51,20 @@ class BoardHeaderWidget extends StatelessWidget {
                 ),
 
                 IconButton(
-                  icon: const Icon(Icons.edit),
+                  icon: board.isArchived? Icon(Icons.restore) : Icon(Icons.edit),
                   tooltip: 'Редактировать доску',
-                  onPressed: (){},
+                  onPressed: () async {
+                    if (board.isArchived == false){
+                      await showDialog(
+                        context: context,
+                        builder: (_) => BoardEditDialog(board: board),
+                      );
+                    }
+                    else{
+                      await usecases.updateBoard(board.copyWith(isArchived: false));
+                      context.router.pushPath("/boards");
+                    }
+                  },
                 ),
               ],
             ),

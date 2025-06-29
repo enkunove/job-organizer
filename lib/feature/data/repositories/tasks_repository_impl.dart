@@ -29,4 +29,10 @@ class TasksRepositoryImpl implements TasksRepository{
     return await datasource.updateTask(model.toMap());
   }
 
+  @override
+  Future<List<Task>> getUserTasks(String userId) async {
+    final List<Map<String, dynamic>> maps = await datasource.getUserTasks(userId);
+    return maps.map((map) => TaskModel.fromMap(map)).toList();
+  }
+
 }

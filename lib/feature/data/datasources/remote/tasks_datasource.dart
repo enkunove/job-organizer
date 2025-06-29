@@ -50,4 +50,25 @@ class TasksDatasource{
       return [];
     }
   }
+  Future<List<Map<String, dynamic>>> getUserTasks(String userId) async {
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa$userId");
+    try {
+      final querySnapshot = await _firestore
+          .collection('tasks')
+          .where('ownerId', isEqualTo: userId)
+          .get();
+
+      final res = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        data['id'] = doc.id;
+        return data;
+      }).toList();
+
+      print(res);
+      return res;
+    } on FirebaseException catch (e) {
+      print(e.message);
+      return [];
+    }
+  }
 }

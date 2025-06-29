@@ -87,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          "Простой способ управлять задачами",
+                          "Тестовое задание для KRAINET.BY",
                           style: textTheme.bodyMedium?.copyWith(
                             color: textTheme.bodyMedium?.color?.withOpacity(0.6),
                           ),
