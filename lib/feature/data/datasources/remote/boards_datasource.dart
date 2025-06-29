@@ -17,6 +17,17 @@ class BoardsDatasource {
         }
     }
 
+    Future<void> updateBoard(Map<String, dynamic> map) async {
+        final id = map['id'];
+        final updateData = Map<String, dynamic>.from(map)..remove('id');
+
+        try {
+            await _firestore.collection('boards').doc(id).update(updateData);
+        } on FirebaseException catch (e) {
+            print(e.message);
+        }
+    }
+
     Future<List<Map<String, dynamic>>> getBoardsByOwner(String ownerId) async {
         try {
             final querySnapshot = await _firestore

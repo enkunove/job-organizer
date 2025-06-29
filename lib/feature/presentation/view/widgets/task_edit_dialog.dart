@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:test_task/core/service_locator.dart';
 import 'package:test_task/feature/domain/usecases/tasks_usecases.dart';
@@ -38,6 +39,7 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
     _selectedDate = widget.task.toDo;
     _status = widget.task.status;
     _priority = widget.task.priority;
+    print(widget.task.id);
   }
 
   @override
@@ -59,18 +61,18 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
     }
   }
 
-  void _deleteTask() {
-    usecases.deleteTask(widget.task.id!);
-    Navigator.pop(context);
+  void _deleteTask() async  {
+    await usecases.deleteTask(widget.task);
+    context.router.pushPath("/boards/${widget.task.boardId}");
   }
 
-  void _saveTask() {
+  void _saveTask() async {
     final title = _titleController.text.trim();
     final comment = _descriptionController.text.trim();
 
     if (title.isEmpty) return;
 
-    usecases.updateTask(
+    await usecases.updateTask(
       widget.task.copyWith(
         title: title,
         comment: comment,
@@ -79,8 +81,7 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
         priority: _priority,
       ),
     );
-
-    Navigator.pop(context);
+    context.router.pushPath("/boards/${widget.task.boardId}");
   }
 
   @override

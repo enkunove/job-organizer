@@ -27,6 +27,7 @@ class BoardModel extends Board {
 
   Map<String, dynamic> toMap() {
     return {
+      'id' : id,
       'ownerId': ownerId,
       'title': title,
       'colorHex': colorHex,

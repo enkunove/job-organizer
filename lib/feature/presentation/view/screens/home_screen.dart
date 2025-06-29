@@ -30,6 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Мои доски задач'),
         actions: [
           IconButton(
+            onPressed: () => context.router.pushPath("/archive/boards"),
+            icon: const Icon(Icons.archive_outlined),
+          ),
+          IconButton(
             onPressed: () {
               context.router.pushPath("/settings");
             },
@@ -60,36 +64,42 @@ class _HomeScreenState extends State<HomeScreen> {
           final crossAxisCount = isSmall ? 1 : 2;
           final padding = 16.0;
           final spacing = 16.0;
-          return Padding(
-            padding: EdgeInsets.all(padding),
-            child: ListView.builder(
-              itemCount: (_boards.length / (isSmall ? 1 : 2)).ceil(),
-              itemBuilder: (context, rowIndex) {
-                final startIndex = rowIndex * (isSmall ? 1 : 2);
-                final endIndex = (startIndex + (isSmall ? 1 : 2)).clamp(
-                  0,
-                  _boards.length,
-                );
+          return Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(padding),
+                  child: ListView.builder(
+                    itemCount: (_boards.length / (isSmall ? 1 : 2)).ceil(),
+                    itemBuilder: (context, rowIndex) {
+                      final startIndex = rowIndex * (isSmall ? 1 : 2);
+                      final endIndex = (startIndex + (isSmall ? 1 : 2)).clamp(
+                        0,
+                        _boards.length,
+                      );
 
-                final rowItems = _boards.sublist(startIndex, endIndex);
-                return Padding(
-                  padding: EdgeInsets.only(bottom: spacing),
-                  child: Row(
-                    children: List.generate(rowItems.length, (i) {
-                      final board = rowItems[i];
-                      return Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: i == rowItems.length - 1 ? 0 : spacing,
-                          ),
-                          child: BoardWidget(board: board),
+                      final rowItems = _boards.sublist(startIndex, endIndex);
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: spacing),
+                        child: Row(
+                          children: List.generate(rowItems.length, (i) {
+                            final board = rowItems[i];
+                            return Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: i == rowItems.length - 1 ? 0 : spacing,
+                                ),
+                                child: BoardWidget(board: board),
+                              ),
+                            );
+                          }),
                         ),
                       );
-                    }),
+                    },
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           );
         },
       ),

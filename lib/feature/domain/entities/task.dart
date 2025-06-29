@@ -2,6 +2,7 @@ import 'package:test_task/feature/domain/entities/task_enums.dart';
 
 class Task {
   final String? id;
+  final String ownerId;
   final String boardId;
   final String title;
   final String? comment;
@@ -12,6 +13,7 @@ class Task {
 
   Task({
     this.id,
+    required this.ownerId,
     required this.boardId,
     required this.title,
     this.comment,
@@ -30,9 +32,11 @@ class Task {
     TaskStatus? status,
     TaskPriority? priority,
     String? boardId,
+    String? ownerId,
   }) {
     return Task(
       id: id ?? this.id,
+      ownerId: ownerId ?? this.ownerId,
       title: title ?? this.title,
       comment: comment ?? this.comment,
       changed: changed ?? this.changed,

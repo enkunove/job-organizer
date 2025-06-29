@@ -33,15 +33,16 @@ class TasksScreen extends StatelessWidget {
         builder: (context, vm, _) {
           return Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => context.router.pushPath("/boards"),
+              ),
               title: const Text('Задачи'),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.refresh),
                   onPressed: vm.refresh,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.archive),
-                  onPressed: () => context.router.pushPath("/archive"),
                 ),
               ],
             ),
@@ -66,7 +67,6 @@ class TasksScreen extends StatelessWidget {
                     return IntrinsicHeight(
                       child: BoardHeaderWidget(board: board),
                     );
-
                   },
                 ),
                 const SizedBox(height: 12),

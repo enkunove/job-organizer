@@ -4,6 +4,7 @@ import 'package:test_task/feature/domain/entities/task_enums.dart';
 class TaskModel extends Task {
   TaskModel({
     super.id,
+    required super.ownerId,
     required super.boardId,
     required super.title,
     super.comment,
@@ -16,6 +17,7 @@ class TaskModel extends Task {
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
       id: map['id'] as String,
+      ownerId: map['ownerId'] as String,
       boardId: map['boardId'] as String,
       title: map['title'] as String,
       comment: map['comment'] as String?,
@@ -28,6 +30,8 @@ class TaskModel extends Task {
 
   Map<String, dynamic> toMap() {
     return {
+      'id' : id,
+      'ownerId' : ownerId,
       'boardId': boardId,
       'title': title,
       'comment': comment,

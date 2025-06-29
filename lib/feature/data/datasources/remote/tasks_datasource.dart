@@ -17,6 +17,19 @@ class TasksDatasource{
     }
   }
 
+  Future<void> updateTask(Map<String, dynamic> map) async {
+    final id = map['id'];
+    print(map["id"]);
+    final updateData = Map<String, dynamic>.from(map)..remove('id');
+
+    try {
+      await _firestore.collection('tasks').doc(id).update(updateData);
+    } on FirebaseException catch (e) {
+      print(e.message);
+    }
+  }
+
+
   Future<List<Map<String, dynamic>>> getTasksForBoardByBoardId(String boardId) async {
     try {
       final querySnapshot = await _firestore

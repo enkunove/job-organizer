@@ -26,6 +26,22 @@ class BoardsRepositoryImpl implements BoardsRepository{
   }
 
   @override
+  Future<void> updateBoard(Board board) async {
+    final BoardModel model = BoardModel(
+      id: board.id,
+      ownerId: board.ownerId,
+      title: board.title,
+      colorHex: board.colorHex,
+      description: board.description,
+      createdAt: board.createdAt,
+      lastUpdate: board.lastUpdate,
+      isArchived: board.isArchived,
+    );
+    return await datasource.updateBoard(model.toMap());
+
+  }
+
+  @override
   Future<List<BoardModel>> getBoardsByOwner(String ownerId) async {
     final List<Map<String, dynamic>> boardsMaps = await datasource.getBoardsByOwner(ownerId);
 

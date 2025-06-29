@@ -18,4 +18,27 @@ class Board {
     required this.lastUpdate,
     required this.isArchived,
   });
+
+  Board copyWith({
+    String? id,
+    String? ownerId,
+    String? title,
+    DateTime? createdAt,
+    DateTime? lastUpdate,
+    String? colorHex,
+    bool? isArchived,
+    String? boardId,
+    String? description,
+  }) {
+    return Board(
+      id: id ?? this.id,
+      ownerId: ownerId ?? this.ownerId,
+      title: title ?? this.title,
+      createdAt: createdAt ?? this.createdAt,
+      lastUpdate: lastUpdate ?? this.lastUpdate,
+      colorHex: colorHex ?? this.colorHex,
+      isArchived: isArchived ?? this.isArchived,
+      description: description ?? this.description
+    );
+  }
 }

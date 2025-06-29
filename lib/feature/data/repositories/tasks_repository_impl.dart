@@ -18,8 +18,15 @@ class TasksRepositoryImpl implements TasksRepository{
 
   @override
   Future<void> createTask(Task task) async{
-    TaskModel model = TaskModel(boardId: task.boardId, title: task.title, changed: task.changed, priority: task.priority, status: task.status, toDo: task.toDo, comment: task.comment);
+    TaskModel model = TaskModel(ownerId: task.ownerId, boardId: task.boardId, title: task.title, changed: task.changed, priority: task.priority, status: task.status, toDo: task.toDo, comment: task.comment);
     return await datasource.createTask(model.toMap());
+  }
+
+  @override
+  Future<void> updateTask(Task task) async{
+    TaskModel model = TaskModel(ownerId: task.ownerId, boardId: task.boardId, title: task.title, changed: task.changed, priority: task.priority, status: task.status, toDo: task.toDo, comment: task.comment, id: task.id);
+    print(model.id);
+    return await datasource.updateTask(model.toMap());
   }
 
 }

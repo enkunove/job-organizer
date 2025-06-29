@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;
-import 'package:test_task/feature/presentation/view/screens/archive_screen.dart'
+import 'package:test_task/feature/presentation/view/screens/archive_tasks_screen.dart'
     as _i1;
 import 'package:test_task/feature/presentation/view/screens/auth/login_screen.dart'
     as _i5;
@@ -31,17 +31,17 @@ import 'package:test_task/feature/presentation/view/screens/tasks_screen.dart'
     as _i9;
 
 /// generated route for
-/// [_i1.ArchiveScreen]
-class ArchiveRoute extends _i10.PageRouteInfo<void> {
-  const ArchiveRoute({List<_i10.PageRouteInfo>? children})
-    : super(ArchiveRoute.name, initialChildren: children);
+/// [_i1.ArchiveTasksScreen]
+class ArchiveTasksRoute extends _i10.PageRouteInfo<void> {
+  const ArchiveTasksRoute({List<_i10.PageRouteInfo>? children})
+    : super(ArchiveTasksRoute.name, initialChildren: children);
 
-  static const String name = 'ArchiveRoute';
+  static const String name = 'ArchiveTasksRoute';
 
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return const _i1.ArchiveScreen();
+      return const _i1.ArchiveTasksScreen();
     },
   );
 }

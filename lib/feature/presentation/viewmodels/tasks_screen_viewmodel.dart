@@ -18,7 +18,7 @@ class TasksScreenViewmodel extends ChangeNotifier {
   TaskStatus? _selectedStatus;
   TaskSortOption? _selectedSortOption;
 
-  late final Future<Board> board;
+  late Future<Board> board;
 
   TasksScreenViewmodel({required this.tasksUsecases, required this.boardsUsecases});
 
@@ -77,6 +77,7 @@ class TasksScreenViewmodel extends ChangeNotifier {
 
   void refresh() {
     allTasks = getTasksForBoard();
+    board = boardsUsecases.getBoardById(boardId);
     notifyListeners();
   }
 

@@ -35,7 +35,7 @@ class InjectionContainer {
 
     sl.registerLazySingleton<AuthUsecases>(() => AuthUsecases(repository: sl()));
     sl.registerLazySingleton<BoardsUsecases>(() => BoardsUsecases(repository: sl()));
-    sl.registerLazySingleton<TasksUsecases>(() => TasksUsecases(repository: sl()));
+    sl.registerLazySingleton<TasksUsecases>(() => TasksUsecases(userRepository: sl(), tasksRepository: sl(), boardsRepository: sl()));
 
     sl.registerFactory<LoginScreenViewmodel>(() => LoginScreenViewmodel(usecases: sl()));
     sl.registerFactory<RegistrationScreenViewmodel>(() => RegistrationScreenViewmodel(usecases: sl()));

@@ -2,8 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class ArchiveScreen extends StatelessWidget {
-  const ArchiveScreen({super.key});
+class ArchiveTasksScreen extends StatelessWidget {
+  const ArchiveTasksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

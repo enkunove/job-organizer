@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_task/core/themes/theme_provider.dart';
@@ -14,6 +15,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late bool notificationsEnabled;
   late bool isDarkTheme;
+  late String email;
 
   void toggleNotifications(bool value) {
     setState(() {
@@ -28,15 +30,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-  void logout() {
-    context.router.pushPath('/login');
-  }
-
   @override
   void initState() {
     super.initState();
     notificationsEnabled = true;
     isDarkTheme = context.read<ThemeProvider>().isDarkMode;
+    email = FirebaseAuth.instance.currentUser!.email!;
   }
 
   @override
@@ -58,13 +57,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SwitchListTile(
             value: isDarkTheme,
             onChanged: toggleTheme,
-            title: const Text('Тёмная тема'),
+            title: const Text('Темная тема'),
+          ),
+          ListTile(
+            trailing: const Icon(Icons.update),
+            title: const Text('Восстановить задачи'),
+            onTap: ()=> context.router.replacePath('/archive/tasks'),
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Выйти'),
-            onTap: logout,
+            subtitle: Text(email),
+            onTap: () => context.router.replacePath('/login')
           ),
         ],
       ),
