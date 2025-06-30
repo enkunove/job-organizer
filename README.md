@@ -1,5 +1,5 @@
 # handwritten readme!!
-#if something is not working i can share a docker image of the devenv
+if something is not working i can share a docker image of the devenv. because everything is working
 
 ## my development env:
 - Flutter 3.32.5
