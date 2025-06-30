@@ -28,6 +28,7 @@ dependencies:
   firebase_messaging:
   flutter_local_notifications:
   timezone:
+  firebase_auth_mocks:
   mocktail:
 
 dev_dependencies:

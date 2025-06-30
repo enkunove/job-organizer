@@ -28,7 +28,7 @@ class DarkTheme {
       elevation: 1,
       centerTitle: true,
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: _cardColor,
       elevation: 2,
       shape: RoundedRectangleBorder(

@@ -8,8 +8,12 @@ Future<void> showBetaDialog(BuildContext context) async {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final dialogWidth = screenWidth > 500 ? screenWidth / 2 : null;
         return AlertDialog(
-          content: StatefulBuilder(
+          content: Container(
+            width: dialogWidth,
+            child: StatefulBuilder(
             builder: (context, setState) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -55,7 +59,7 @@ Future<void> showBetaDialog(BuildContext context) async {
                 ],
               );
             },
-          ),
+          ),),
           actions: [
             TextButton(
               onPressed: () async {
